@@ -30,8 +30,16 @@ function addRandomGreeting() {
 /**
     Adds "Hello" message
  */
-function addHello(){
-    fetch('/data').then(response => response.text()).then(hello => {
-        document.getElementById('hello-container').innerText = hello;
+// function addHello(){
+//     fetch('/data').then(response => response.text()).then(hello => {
+//         document.getElementById('hello-container').innerText = hello;
+//     });
+// }
+
+function addJSON(){
+    text = fetch('/data').then(response => response.text());
+    text.then(print => {
+        console.log(print);
+        document.getElementById('comments-container').innerText = print;
     });
 }
