@@ -21,24 +21,53 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import com.google.gson.Gson;
+import java.util.Arrays;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
-@WebServlet("/data")
-public class DataServlet extends HttpServlet {
+// @WebServlet("/data")
+// public class DataServlet extends HttpServlet {
 
-    ArrayList<String> messages = new ArrayList<String>();
+//     ArrayList<String> messages = new ArrayList<String>();
 
-    public DataServlet() {
-        messages.add("This is the first message.");
-        messages.add("This is the second message!");
-        messages.add("This is the third message!!");
+//     public DataServlet() {
+//         messages.add("This is the first message.");
+//         messages.add("This is the second message!");
+//         messages.add("This is the third message!!");
+//     }
+
+//   @Override
+//   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+//     String json = new Gson().toJson(messages);
+
+//     response.setContentType("text/html;");
+//     response.getWriter().println(json);
+//   }
+// }
+
+@WebServlet("/comment")
+public class DataServlet extends HttpServlet{
+
+    ArrayList<String> comments = new ArrayList<String>();
+
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        String name = request.getParameter("name");
+        String comment = request.getParameter("comment");
+        comments.add(comment);
+
+        String json = new Gson().toJson(comments);
+
+        response.setContentType("text/html");
+        response.getWriter().println(json);
+
+        response.sendRedirect("/");
     }
 
-  @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String json = new Gson().toJson(messages);
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        String json = new Gson().toJson(comments);
 
-    response.setContentType("text/html;");
-    response.getWriter().println(json);
-  }
+        response.setContentType("text/html");
+        response.getWriter().println(json);
+    }
 }

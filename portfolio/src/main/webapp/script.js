@@ -36,10 +36,10 @@ function addRandomGreeting() {
 //     });
 // }
 
-function addJSON(){
-    text = fetch('/data').then(response => response.text());
-    text.then(print => {
-        console.log(print);
-        document.getElementById('comments-container').innerText = print;
+function getComments(){
+    text = fetch('/comment').then(response => response.text());
+    text.then(comments => {
+        console.log(comments);
+        document.getElementById('comments-container').innerText = comments;
     });
 }
