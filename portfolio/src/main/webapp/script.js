@@ -17,7 +17,7 @@
  */
 function addRandomGreeting() {
   const greetings =
-      ['My favorite color is blue', 'I love pizza :)', 'Currently located in Taipei, Taiwan'];
+    ['My favorite color is blue', 'I love pizza :)', 'Currently located in Taipei, Taiwan'];
 
   // Pick a random greeting.
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
@@ -36,10 +36,10 @@ function addRandomGreeting() {
 //     });
 // }
 
-function getComments(){
-    text = fetch('/comment').then(response => response.text());
-    text.then(comments => {
-        console.log(comments);
-        document.getElementById('comments-container').innerText = comments;
-    });
+function getComments() {
+  text = fetch('/comment').then(response => response.text());
+  text.then(comments => {
+    console.log(comments);
+    document.getElementById('comments-container').innerText = comments;
+  });
 }

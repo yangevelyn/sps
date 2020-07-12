@@ -10,19 +10,21 @@
     <div id="content">
       <h1>My Portfolio</h1>
       <div>
-            <h1 id="hello-container"></h1>
+        <h1 id="hello-container"></h1>
       </div>
-      <p>This is my portfolio.</p>
-      <p>Hi, welcome to my portfolio! My name is Evelyn—I'm currently
-          a rising third-year computer science major at UCSB. I love to
-          read and make music. Nice to meet you!
+      <p>
+        Hi, welcome to my portfolio! My name is Evelyn—I'm currently
+        a rising third-year computer science major at UCSB. I love to
+        read and make music. Nice to meet you!
       </p>
       <img src='/images/profile.jpg' width='100px'>
+      <br/>
+      <br/>
       <form action='/comment' method='POST'>
         <p>Feel free to leave your comments here!</p>
-        <textarea name='name'>Name</textarea>
+        <textarea name='name' placeholder="Name"></textarea>
         <br/>
-        <textarea name='comment'>Comment</textarea>
+        <textarea name='comment' rows='10' cols='50' placeholder="Comment"></textarea>
         <br/>
 
         <input type='submit' />
