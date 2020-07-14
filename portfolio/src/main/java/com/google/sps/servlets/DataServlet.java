@@ -19,14 +19,63 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import com.google.gson.Gson;
+import java.util.Arrays;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.PreparedQuery;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
-@WebServlet("/data")
+
+/*
+ * Handles user input in comment boxes and displays existing comments from Datastore
+ */
+@WebServlet("/comment")
 public class DataServlet extends HttpServlet {
 
+  ArrayList<String> comments = new ArrayList<String>();
+
+  /*
+   * Stores a user comment in Datastore and redirects back to same page
+   */
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
+    String name = request.getParameter("name");
+    String comment = request.getParameter("comment");
+    comments.add(comment);
+
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("name", name);
+    commentEntity.setProperty("content", comment);
+    commentEntity.setProperty("timestamp", System.currentTimeMillis());
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(commentEntity);
+
+    response.sendRedirect("/");
+  }
+
+  /*
+   * Displays all existing user comments, sorted by time commented
+   */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html;");
-    response.getWriter().println("<h1>Hello world!</h1>");
+
+    ArrayList<Object> dataList = new ArrayList<>();
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    Query query = new Query("Comment").addSort("timestamp");
+    PreparedQuery results = datastore.prepare(query);
+
+    for (Entity entity : results.asIterable()) {
+      dataList.add(entity.getProperty("content"));
+    }
+
+    String json = new Gson().toJson(dataList);
+
+    response.setContentType("text/html");
+    response.getWriter().println(json);
   }
 }

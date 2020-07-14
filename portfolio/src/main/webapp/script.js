@@ -17,7 +17,7 @@
  */
 function addRandomGreeting() {
   const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+    ['My favorite color is blue', 'I love pizza :)', 'Currently located in Taipei, Taiwan'];
 
   // Pick a random greeting.
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
@@ -25,4 +25,21 @@ function addRandomGreeting() {
   // Add it to the page.
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
+}
+
+/**
+    Adds "Hello" message
+ */
+// function addHello(){
+//     fetch('/data').then(response => response.text()).then(hello => {
+//         document.getElementById('hello-container').innerText = hello;
+//     });
+// }
+
+function getComments() {
+  text = fetch('/comment').then(response => response.text());
+  text.then(comments => {
+    console.log(comments);
+    document.getElementById('comments-container').innerText = comments;
+  });
 }
