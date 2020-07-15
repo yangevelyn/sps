@@ -43,3 +43,11 @@ function getComments() {
     document.getElementById('comments-container').innerText = comments;
   });
 }
+
+function getLogin() {
+  text = fetch('/login').then(response => response.text());
+  text.then(login => {
+    console.log(login);
+    document.getElementById('login-container').innerHTML = login;
+  });
+}
