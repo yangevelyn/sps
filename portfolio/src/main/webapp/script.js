@@ -36,6 +36,11 @@ function addRandomGreeting() {
 //     });
 // }
 
+function onLoad() {
+  getComments();
+  getLogin();
+}
+
 function getComments() {
   text = fetch('/comment').then(response => response.text());
   text.then(comments => {
@@ -50,4 +55,5 @@ function getLogin() {
     console.log(login);
     document.getElementById('login-container').innerHTML = login;
   });
+  
 }
