@@ -27,6 +27,8 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 
 
 /*
@@ -42,12 +44,16 @@ public class DataServlet extends HttpServlet {
    */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
+    UserService userService = UserServiceFactory.getUserService();
+    String email = userService.getCurrentUser().getEmail();
+    
     String name = request.getParameter("name");
     String comment = request.getParameter("comment");
     comments.add(comment);
 
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("name", name);
+    commentEntity.setProperty("email", email);
     commentEntity.setProperty("content", comment);
     commentEntity.setProperty("timestamp", System.currentTimeMillis());
 
@@ -70,7 +76,8 @@ public class DataServlet extends HttpServlet {
     PreparedQuery results = datastore.prepare(query);
 
     for (Entity entity : results.asIterable()) {
-      dataList.add(entity.getProperty("content"));
+      Object[] item = {entity.getProperty("email"), entity.getProperty("content")};
+      dataList.add(item);
     }
 
     String json = new Gson().toJson(dataList);

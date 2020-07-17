@@ -36,10 +36,24 @@ function addRandomGreeting() {
 //     });
 // }
 
+function onLoad() {
+  getComments();
+  getLogin();
+}
+
 function getComments() {
   text = fetch('/comment').then(response => response.text());
   text.then(comments => {
     console.log(comments);
     document.getElementById('comments-container').innerText = comments;
   });
+}
+
+function getLogin() {
+  text = fetch('/login').then(response => response.text());
+  text.then(login => {
+    console.log(login);
+    document.getElementById('login-container').innerHTML = login;
+  });
+  
 }
